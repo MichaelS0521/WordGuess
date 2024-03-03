@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class WordGuess {
     public static void main(String[] args) {
+
         Scanner scanner = new Scanner(System.in);
 
         boolean playAgain = true;   //setting playAgain to "true".
@@ -14,10 +15,10 @@ public class WordGuess {
 
             System.out.print("Would you like to play again? (yes/no): ");
             String playChoice = scanner.next();
-            playAgain = playChoice.equalsIgnoreCase("yes");
+            playAgain = playChoice.equalsIgnoreCase("yes");     //if user inputs "yes".
         }
 
-        System.out.println("\nThanks for playing Fishing Word Guess 1.0!");
+        System.out.println("\nThanks for playing Fishing Word Guess 1.0!");     //if user inputs "no".
         scanner.close();
 
     }
@@ -44,7 +45,8 @@ public class WordGuess {
         while (numTries < maxTries) {
             
             System.out.println("\nYour word has [" + playerGuesses.length + "] letters: ");
-            for(char userGuess : playerGuesses) {
+
+            for (char userGuess : playerGuesses) {
                 System.out.print(userGuess + " ");
             }
 
@@ -56,7 +58,7 @@ public class WordGuess {
 
             char letter = scanner.next().charAt(0);     //user input guess.
 
-                if(letter == '-') {     //Option for user to quit the game.
+                if (letter == '-') {     //Option for user to quit the game.
                     System.out.print("Quitting the game... Thanks for playing.\n");
                     break;
                 }
