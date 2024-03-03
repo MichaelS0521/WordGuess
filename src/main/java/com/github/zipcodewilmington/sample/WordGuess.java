@@ -5,11 +5,28 @@ import java.util.Scanner;
 
 public class WordGuess {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
-        String[] randWords = {"fish", "rod", "bait", "hook", "line", "bass", "carp"}; //array of random fishing words.
+        boolean playAgain = true;   //setting playAgain to "true".
+
+        while (playAgain) {
+            playGame(scanner);
+
+            System.out.print("Would you like to play again? (yes/no): ");
+            String playChoice = scanner.next();
+            playAgain = playChoice.equalsIgnoreCase("yes");
+        }
+
+        System.out.println("\nThanks for playing Fishing Word Guess 1.0!");
+        scanner.close();
+
+    }
+
+        public static void playGame(Scanner scanner){
+
+        String[] randWords = {"fish", "rod", "bait", "hook", "line", "bass", "carp", "leader", "crankbait", "crappie"}; //array of random fishing words.
 
         Random random = new Random();
-        Scanner scanner = new Scanner(System.in);
 
         int maxTries = 6;   //Max # of user tries.
         int numTries = 0;   //Current # of user tries
@@ -71,7 +88,6 @@ public class WordGuess {
                 System.out.println("You Lost! You ran out of guesses!\n" + "The word was: " + fishingWord);
             }
 
-            scanner.close();
     }
                 
                 
