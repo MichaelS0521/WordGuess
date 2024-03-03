@@ -9,7 +9,7 @@ public class WordGuess {
 
         boolean playAgain = true;   //setting playAgain to "true".
 
-        while (playAgain) {
+        while (playAgain) {     //
             playGame(scanner);
 
             System.out.print("Would you like to play again? (yes/no): ");
@@ -68,12 +68,12 @@ public class WordGuess {
                     if (solution[i] == letter) {    //if users attempt is correct.
                         playerGuesses[i] = letter;
                         found = true;
-                        System.out.print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+                        System.out.print("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
                     }
                 }
                 
                 if (!found) {   //if users attempt is incorrect.
-                    System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\nThat letter was Incorrect.");
+                    System.out.println("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\nThat letter was Incorrect.");
                     numTries++;
                 }
                 
