@@ -9,9 +9,8 @@ public class WordGuess2 {
     public static int maxNumberOfTries = 6;
     public static int numberOfTries = 0;
     public static String[] randomWords = {"code", "java", "line", "wordguess", "maven"};
-    public static String codingWord = randomWords[random.nextInt(randomWords.length)];
-    public static char[] solution = codingWord.toCharArray();
-    public static char[] playerGuesses = new char[solution.length];
+    public static char[] solution;
+    public static char[] playerGuesses;
     public static int currentNumberOfTries;
     public static char letter;
     public static boolean found = false;
@@ -28,21 +27,29 @@ public class WordGuess2 {
                 endGame();
                 break;
             }
+
             System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n" + "Let's Play Fishing WordGuess version 1.0!\n" + "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+
+            generateRandomWord();
+            randomWordSpaces();
+            numberOfTries = 0;
+
             System.out.print("You have a maximum of [" + maxNumberOfTries + "] guesses!\n");     //tells user maximum tries.
+
             while (numberOfTries < maxNumberOfTries) {
 
-                randomWordSpaces();
                 gameDisplay();
 
                 correctGuess();
                 wrongGuess();
-                winningGame();
-                outOfTries();
 
                 quitingTheGame();
+
+                if (numberOfTries == maxNumberOfTries || String.valueOf(playerGuesses).equals(String.valueOf(solution))){
+                    winningGame();
+                    outOfTries();
+                }
             }
-            break;
         }
     }
 
@@ -51,7 +58,13 @@ public class WordGuess2 {
         return scan.next().toLowerCase();
     }
 
+    public static void generateRandomWord() {
+        String codingWord = randomWords[random.nextInt(randomWords.length)];
+        solution = codingWord.toCharArray();
+    }
+
     public static void randomWordSpaces() {
+        playerGuesses = new char[solution.length];
             for (int i = 0; i < playerGuesses.length; i++) {    //Puts a _ for every letter in "fishingWord".
                 playerGuesses[i] = '_';
 
@@ -59,6 +72,7 @@ public class WordGuess2 {
     }
 
     public static void gameDisplay() {
+        found = false;
         System.out.println("\nYour word has [" + playerGuesses.length + "] letters: ");
 
         for (char userGuess : playerGuesses) {
@@ -75,7 +89,7 @@ public class WordGuess2 {
     }
 
     public static void correctGuess() {
-        found = false;
+
         for (int i = 0; i < solution.length; i++) {
             if (solution[i] == letter) {    //if users attempt is correct.
                 playerGuesses[i] = letter;
@@ -97,9 +111,10 @@ public class WordGuess2 {
     }
 
     public static void winningGame() {
-        if (String.valueOf(playerGuesses).equals(codingWord)) {    //if user guesses the word.
-            System.out.println("Congratulations! You've guessed the word: " + codingWord + "\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+        if (String.valueOf(playerGuesses).equals(String.valueOf(solution))) {    //if user guesses the word.
+            System.out.println("Congratulations! You've guessed the word: " + String.valueOf(solution) + "\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
         }
+        playAgain();
     }
 
     public static void quitingTheGame() {
@@ -111,12 +126,18 @@ public class WordGuess2 {
 
     public static void outOfTries() {
         if (numberOfTries == maxNumberOfTries) {     //if user runs out of guesses.
-            System.out.println("You Lost! You ran out of guesses!\n" + "The word was: " + codingWord);
+            System.out.println("You Lost! You ran out of guesses!\n" + "The word was: " + String.valueOf(solution));
+            playAgain();
         }
     }
 
     public static void playAgain() {
-        playSelect();
+        System.out.println("Would you like to play again? [Yes/No]");
+        String playAgain = scan.next();
+        if (playAgain == "no"){
+            endGame();
+        }
+        playGame();
     }
 
     public static void endGame() {
