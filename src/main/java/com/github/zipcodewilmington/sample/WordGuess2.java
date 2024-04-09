@@ -69,7 +69,7 @@ public class WordGuess2 {
     public static void gameDisplay() {
         found = false;
         System.out.println("\nYour word has [" + playerGuesses.length + "] letters: ");
-
+        System.out.print("  ");
         for (char userGuess : playerGuesses) {
             System.out.print(userGuess + " ");
 
@@ -77,7 +77,7 @@ public class WordGuess2 {
 
         currentNumberOfTries = maxNumberOfTries - numberOfTries;
 
-        System.out.println("\n You have [" + currentNumberOfTries + "] tries left. ");    //tells user how many tries they have left.
+        System.out.println("\nYou have [" + currentNumberOfTries + "] tries left. ");    //tells user how many tries they have left.
         hints();
         System.out.print("Enter a letter or '-' to end the program: ");
 
@@ -193,6 +193,7 @@ public class WordGuess2 {
 
     public static void endGame() {
         System.out.println("Thank you for playing!\n");
+        
     }
 
 }
