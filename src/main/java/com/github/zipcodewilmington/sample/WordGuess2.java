@@ -1,16 +1,20 @@
 package com.github.zipcodewilmington.sample;
 
+import javax.swing.*;
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.Scanner;
 
-public class WordGuess2 {
+public class WordGuess2 extends JFrame {
     public static Scanner scan = new Scanner(System.in);
     public static Random random = new Random();
     public static int maxNumberOfTries = 6;
     public static int numberOfTries = 0;
-    public static String[] randomWords = {"code", "java", "line", "wordguess", "maven"};
+    public static String[] randomWords = {"bass", "carp", "mono", "braid", "hook", "salt water", "fresh water", "bait caster", "spinning reel", "live bait", "swim bait", };
     public static char[] solution;
     public static char[] playerGuesses;
+    public static ArrayList<Character> allPlayerGuesses = new ArrayList<>();
     public static int currentNumberOfTries;
     public static char letter;
     public static boolean found = false;
@@ -40,9 +44,6 @@ public class WordGuess2 {
 
                 gameDisplay();
 
-                correctGuess();
-                wrongGuess();
-
                 quitingTheGame();
 
                 if (numberOfTries == maxNumberOfTries || String.valueOf(playerGuesses).equals(String.valueOf(solution))){
@@ -67,7 +68,6 @@ public class WordGuess2 {
         playerGuesses = new char[solution.length];
             for (int i = 0; i < playerGuesses.length; i++) {    //Puts a _ for every letter in "fishingWord".
                 playerGuesses[i] = '_';
-
         }
     }
 
@@ -86,6 +86,16 @@ public class WordGuess2 {
         System.out.print("Enter a letter or '-' to end the program: ");
 
         letter = scan.next().charAt(0);     //user input guess.
+
+        if (allPlayerGuesses.contains(letter)) {
+            System.out.println("\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
+                    "You have already guessed the letter {" + letter +"}❗️" +
+                    "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
+        }else {
+            allPlayerGuesses.add(letter);
+            correctGuess();
+            wrongGuess();
+        }
     }
 
     public static void correctGuess() {
@@ -98,14 +108,16 @@ public class WordGuess2 {
         }
         if (found) {
             System.out.println("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n" +
-                    "Correct guess! '" + letter + "' is in the word.\n" +
+                    "Correct guess! {" + letter + "} is in the word.\n" +
                     "-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
         }
     }
 
     public static void wrongGuess() {
         if (!found) {   //if users attempt is incorrect.
-            System.out.println("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n\nThat letter was Incorrect.");
+            System.out.println("\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯\n" +
+                    "{" + letter + "} was Incorrect." +
+                    "\n⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯");
             numberOfTries++;
         }
     }
@@ -113,8 +125,8 @@ public class WordGuess2 {
     public static void winningGame() {
         if (String.valueOf(playerGuesses).equals(String.valueOf(solution))) {    //if user guesses the word.
             System.out.println("Congratulations! You've guessed the word: " + String.valueOf(solution) + "\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-\n");
+            playAgain();
         }
-        playAgain();
     }
 
     public static void quitingTheGame() {
@@ -134,7 +146,7 @@ public class WordGuess2 {
     public static void playAgain() {
         System.out.println("Would you like to play again? [Yes/No]");
         String playAgain = scan.next();
-        if (playAgain == "no"){
+        if (Objects.equals(playAgain, "no")){
             endGame();
         }
         playGame();
